@@ -4,7 +4,7 @@
 using namespace std;
 
 enum TokenType {
-    COMMA, //...
+    COMMA, UNKNOWN, //...
 };
 
 class Token {
