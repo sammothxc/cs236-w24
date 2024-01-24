@@ -1,0 +1,17 @@
+*** Start of Input ***
+
+
+Queries:
+   marriedTo ('Bea' , 'Zed')?
+
+Rules:
+   marriedTo( X,Y ) :- marriedTo(Y,X) .
+
+
+
+*** End of Input ***
+chars: 91
+lines: 9
+spaces: 23
+digits: 0
+letters: 49
