@@ -76,6 +76,9 @@ public:
                     value += c; // Add the closing single quote
                     return Token(STRING, value, line);
                 }
+            } else if (c == '\n') {
+                line++; // Increment line number for newlines in strings
+                value += c;
             } else {
                 value += c;
             }

@@ -1,4 +1,4 @@
-(COMMENT," unterminated string",3)
+(COMMENT,"# unterminated string",3)
 (SCHEMES,"Schemes",5)
 (COLON,":",5)
 (ID,"student",6)
