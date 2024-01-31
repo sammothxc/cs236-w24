@@ -57,6 +57,11 @@ public:
     }
 
     std::string toString() const {
-        return "(" + typeName() + ",\"" + value + "\"," + std::to_string(line) + ")";
-    }
+        if (type == COMMENT) {
+            return "(" + typeName() + ",\"#" + value + "\"," + std::to_string(line) + ")";
+        } else {
+            return "(" + typeName() + ",\"" + value + "\"," + std::to_string(line) + ")";
+        }
+}
+
 };
