@@ -26,10 +26,15 @@ int main(int argc, char* argv[]) {
     // Tokenize input and print tokens
     Token token = scanner.scanToken();
     int tokenCount = 0;
-    while (token.getType() != EOF_TOKEN) {
+    bool end_of_file = false;
+    while (token.getType() != end_of_file) {
         std::cout << token.toString() << std::endl;
         tokenCount++;
         token = scanner.scanToken();
+        // Recognize end of file
+        if (token.getType() == EOF_TOKEN) {
+            end_of_file = true;
+        }
     }
 
     // Print total token count
