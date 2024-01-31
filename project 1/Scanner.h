@@ -65,7 +65,7 @@ public:
     Token scanString() {
         std::string value;
         int startLine = line; // Fix UNDEFINED token returning with the line number that it ends on instead of the line number that it first occurs
-        value += '\''; // Add the opening single quote
+        value += '\''; // Add the opening single quote to the value
         while (!input.empty()) {
             char c = input.front();
             input = input.substr(1);
