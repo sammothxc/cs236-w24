@@ -10,6 +10,11 @@ public:
     Scanner(const std::string& input) : input(input) {}
 
     Token scanToken() {
+        // Check if input string is empty, return EOF token if it is. Hopefully this works.
+        if (input.empty()) {
+            return Token(EOF_TOKEN, "", line);
+        }
+
         while (!input.empty()) {
             char c = input.front();
             input = input.substr(1); // Move to the next character
@@ -55,7 +60,7 @@ public:
             }
         }
         // If input is empty, return EOF token. But it isn't working for some reason.
-        return Token(EOF_TOKEN, "", line);
+        //return Token(EOF_TOKEN, "", line);
     }
 
     Token scanString() {
