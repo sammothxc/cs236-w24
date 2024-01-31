@@ -19,7 +19,7 @@ enum TokenType {
     STRING,
     COMMENT,
     UNDEFINED,
-    EOF_TOKEN
+    EOF_TOKEN // Need to debug this
 };
 
 class Token {
