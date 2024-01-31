@@ -60,6 +60,7 @@ public:
 
     Token scanString() {
         std::string value;
+        value += '\''; // Add the opening single quote
         while (!input.empty()) {
             char c = input.front();
             input = input.substr(1);
@@ -68,6 +69,7 @@ public:
                     value += c;
                     input = input.substr(1); // Skip the second apostrophe
                 } else {
+                    value += c; // Add the closing single quote
                     return Token(STRING, value, line);
                 }
             } else {
