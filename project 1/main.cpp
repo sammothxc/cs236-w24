@@ -18,11 +18,12 @@ int main() {
     Scanner scanner(inputString);
 
     // Tokenize input and print tokens
-    Token token;
+    Token token = scanner.scanToken();
     int tokenCount = 0;
-    while ((token = scanner.scanToken()).getType() != EOF_TOKEN) {
+    while (token.getType() != EOF_TOKEN) {
         std::cout << token.toString() << std::endl;
         tokenCount++;
+        token = scanner.scanToken();
     }
 
     // Print total token count

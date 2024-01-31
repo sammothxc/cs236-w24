@@ -1,4 +1,3 @@
-// Token.h
 #pragma once
 #include <string>
 
@@ -30,6 +29,8 @@ private:
     int line;
 public:
     Token(TokenType type, const std::string& value, int line) : type(type), value(value), line(line) {}
+
+    TokenType getType() const { return type; } // Getter method for type
 
     std::string typeName() const {
         switch(type) {
