@@ -12,7 +12,6 @@ public:
     Token scanToken() {
 
         if (input.empty()) {
-            std::cout << "Reached end of input string" << std::endl; // Debugging
             return Token(EOF_TOKEN, "", line);
         }
         while (!input.empty()) {
@@ -60,7 +59,6 @@ public:
             }
         }
         // If input is empty, return EOF token. But it isn't working for some reason.
-        std::cout << "Reached end of input string" << std::endl; // Debugging
         return Token(EOF_TOKEN, "", line);
     }
 
