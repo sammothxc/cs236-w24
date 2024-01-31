@@ -54,7 +54,7 @@ public:
                     return Token(UNDEFINED, std::string(1, c), line);
             }
         }
-        // If input is empty, return EOF token
+        // If input is empty, return EOF token. But it isn't working for some reason.
         return Token(EOF_TOKEN, "", line);
     }
 
