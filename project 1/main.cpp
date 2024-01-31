@@ -26,11 +26,13 @@ int main(int argc, char* argv[]) {
     // Tokenize input and print tokens
     Token token = scanner.scanToken();
     int tokenCount = 0;
-    while (token.getType() != EOF_TOKEN) {
+    // Workaround to print EOF token
+    do {
         std::cout << token.toString() << std::endl;
         tokenCount++;
         token = scanner.scanToken();
-    }
+    } while (token.getType() != EOF_TOKEN);
+
 
     // Print total token count
     std::cout << "Total Tokens = " << tokenCount << std::endl;
