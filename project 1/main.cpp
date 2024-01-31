@@ -29,6 +29,9 @@ int main(int argc, char* argv[]) {
     // Workaround to print EOF token
     do {
         std::cout << token.toString() << std::endl;
+        if (token.getType() == EOF_TOKEN) {
+            std::cout << "EOFFFFF boiiii" << std::endl; // Slowly losing my mind
+        }
         tokenCount++;
         token = scanner.scanToken();
     } while (token.getType() != EOF_TOKEN);
