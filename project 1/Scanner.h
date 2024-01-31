@@ -102,17 +102,14 @@ public:
             }
             // If block comment is not terminated, return undefined token
             return Token(UNDEFINED, value, line);
-        } else if (!input.empty() && input.front() == '#') { // Line comment
+        } else { // Line comment
             while (!input.empty() && input.front() != '\n') {
                 value += input.front();
                 input = input.substr(1);
             }
             return Token(COMMENT, value, line);
         }
-        // If neither block comment nor line comment, return undefined token
-        return Token(UNDEFINED, value, line);
     }
-
 
     Token scanIdentifier(char firstChar) {
         std::string value;
