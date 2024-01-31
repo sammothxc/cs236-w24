@@ -64,6 +64,7 @@ public:
 
     Token scanString() {
         std::string value;
+        int startLine = line; // Fix UNDEFINED token returning with the line number that it ends on instead of the line number that it first occurs
         value += '\''; // Add the opening single quote
         while (!input.empty()) {
             char c = input.front();
@@ -74,7 +75,7 @@ public:
                     input = input.substr(1); // Skip the second apostrophe
                 } else {
                     value += c; // Add the closing single quote
-                    return Token(STRING, value, line);
+                    return Token(STRING, value, startLine); // Return the token with the start line number
                 }
             } else if (c == '\n') {
                 line++; // Increment line number for newlines in strings
@@ -83,9 +84,10 @@ public:
                 value += c;
             }
         }
-        // If string is not terminated, return undefined token
-        return Token(UNDEFINED, value, line);
+        // If string is not terminated, return undefined token with the start line number
+        return Token(UNDEFINED, value, startLine);
     }
+
 
     Token scanComment() {
         char c;
