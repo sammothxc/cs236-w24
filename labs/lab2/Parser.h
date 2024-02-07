@@ -29,4 +29,22 @@ public:
             throwError();
         }
     }
+
+    void idList() {
+        if (tokenType() == COMMA) {
+            match(COMMA);
+            match(ID);
+            idList();
+        } else {
+            // lambda
+        }
+    }
+
+    void scheme() {
+        match(ID);
+        match(LEFT_PAREN);
+        match(ID);
+        idList();
+        match(RIGHT_PAREN);
+    }
 };
