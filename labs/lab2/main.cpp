@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include "Token.h"
 #include "Parser.h"
+#include "Token.h"
 using namespace std;
 
 int main() {
@@ -13,11 +13,9 @@ int main() {
   };
 
   Parser p = Parser(tokens);
-  cout << p.tokenType() << endl;
-  p.advanceToken();
-  cout << p.tokenType() << endl;
-  p.advanceToken();
-  cout << p.tokenType() << endl;
-  p.throwError();
-    
+  p.match(ID);
+  p.match(LEFT_PAREN);
+  p.match(ID);         // intentional error
+  p.match(RIGHT_PAREN);
+
 }
