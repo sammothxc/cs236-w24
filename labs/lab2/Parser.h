@@ -1,5 +1,7 @@
-#include vector
-#include Token.h
+#include <vector>
+#include <iostream>
+#include "Token.h"
+using namespace std;
 
 class Parser {
     private:
@@ -14,7 +16,7 @@ class Parser {
         void advanceToken() {
         tokens.erase(tokens.begin());
         }
-        
+
         void throwError() {
             cout << "error" << endl;
         }
