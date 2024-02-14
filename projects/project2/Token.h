@@ -4,17 +4,13 @@
 #include <string>
 
 enum TokenType {
-    SCHEMES, FACTS, RULES, QUERIES, ID, STRING, COLON, LEFT_PAREN, RIGHT_PAREN,
-    COMMA, PERIOD, COLON_DASH, Q_MARK, EOF_TOKEN, UNKNOWN
+    SCHEMES, FACTS, RULES, QUERIES,
+    ID, STRING, COMMA, COLON, COLON_DASH, Q_MARK, LEFT_PAREN, RIGHT_PAREN, PERIOD, EOF_TOKEN
 };
 
-class Token {
-public:
+struct Token {
     TokenType type;
     std::string value;
-    int line;
-
-    Token(TokenType t, const std::string& v, int l);
 };
 
 #endif
