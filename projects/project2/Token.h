@@ -1,10 +1,7 @@
-#include <iostream>
-#include <vector>
-#include <set>
-#include <algorithm>
-#include <string>
+#ifndef TOKEN_H
+#define TOKEN_H
 
-using namespace std;
+#include <string>
 
 enum TokenType {
     SCHEMES, FACTS, RULES, QUERIES, ID, STRING, COLON, LEFT_PAREN, RIGHT_PAREN,
@@ -14,8 +11,10 @@ enum TokenType {
 class Token {
 public:
     TokenType type;
-    string value;
+    std::string value;
     int line;
 
-    Token(TokenType t, const string& v, int l) : type(t), value(v), line(l) {}
+    Token(TokenType t, const std::string& v, int l);
 };
+
+#endif // TOKEN_H
