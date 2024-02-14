@@ -30,5 +30,4 @@ private:
     std::vector<Parameter> parameters;
 };
 
-
 #endif
