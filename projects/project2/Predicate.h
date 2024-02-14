@@ -1,19 +1,18 @@
+#ifndef PREDICATE_H
+#define PREDICATE_H
 
+#include <string>
+#include <vector>
+#include "Parameter.h"
 
 class Predicate {
 public:
-    string name;
-    vector<Parameter> parameters;
+    std::string name;
+    std::vector<Parameter> parameters;
 
-    Predicate(const string& n, const vector<Parameter>& p) : name(n), parameters(p) {}
+    Predicate(const std::string& n, const std::vector<Parameter>& p);
 
-    string toString() const {
-        string result = name + "(";
-        for (size_t i = 0; i < parameters.size(); ++i) {
-            result += parameters[i].toString();
-            if (i != parameters.size() - 1) result += ",";
-        }
-        result += ")";
-        return result;
-    }
+    std::string toString() const;
 };
+
+#endif

@@ -17,4 +17,4 @@ public:
     Token(TokenType t, const std::string& v, int l);
 };
 
-#endif // TOKEN_H
+#endif
