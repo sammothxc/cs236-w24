@@ -48,7 +48,7 @@ public:
     Predicate headPredicate;
     std::vector<Predicate> bodyPredicates;
 
-    Rule(const Predicate& head) : headPredicate(head) {}
+    Rule(const Predicate& head, const std::vector<Predicate>& body) : headPredicate(head), bodyPredicates(body) {}
 
     std::string toString() const {
         std::string result = headPredicate.toString() + " :- ";
@@ -96,7 +96,7 @@ public:
 };
 
 // Token types
-enum class TokenType { SCHEMES, FACTS, RULES, QUERIES, COLON, COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ID, STRING, EOF_TYPE };
+enum class TokenType { SCHEMES, FACTS, RULES, QUERIES, COLON, COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ID, STRING, EOF_TYPE, COLON_DASH };
 
 // Scanner class for tokenizing input
 class Scanner {
@@ -243,8 +243,7 @@ private:
 
     Rule parseRule() {
         Predicate headPredicate = parsePredicate();
-        expect(TokenType::COLON);
-        expect(TokenType::DASH);
+        expect(TokenType::COLON_DASH);
         std::vector<Predicate> bodyPredicates;
         do {
             bodyPredicates.push_back(parsePredicate());
@@ -252,6 +251,7 @@ private:
         expect(TokenType::PERIOD);
         return Rule(headPredicate, bodyPredicates);
     }
+
 
     void parseQueryList(DatalogProgram& program) {
         while (scanner.getNextToken() == TokenType::ID) {
