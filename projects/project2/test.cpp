@@ -20,6 +20,7 @@ struct Token {
     int lineNumber;
     
     // Constructor
+    Token() : type(UNDEFINED), value(""), lineNumber(0) {}
     Token(TokenType type, const std::string& value, int lineNumber)
         : type(type), value(value), lineNumber(lineNumber) {}
 };
@@ -145,6 +146,9 @@ private:
 // Rule class
 class Rule {
 public:
+    Rule() : headPredicate(""), predicates({}) {}
+    //Rule(const Predicate& head, const std::vector<Predicate>& preds) : headPredicate(head), predicates(preds) {}
+    
     void setHeadPredicate(const Predicate& head) {
         headPredicate = head;
     }
@@ -236,6 +240,7 @@ Predicate query(Scanner& scanner);
 void idList(Predicate& predicate, Scanner& scanner);
 void parameterList(Predicate& predicate, Scanner& scanner);
 void stringList(Predicate& predicate, Scanner& scanner);
+Predicate predicate(Scanner& scanner);
 
 // Parsing functions
 DatalogProgram datalogProgram(Scanner& scanner) {
@@ -435,6 +440,7 @@ void stringList(Predicate& predicate, Scanner& scanner) {
     }
 }
 
+// Main function
 int main() {
     Scanner scanner(std::cin);
     DatalogProgram program = datalogProgram(scanner);
