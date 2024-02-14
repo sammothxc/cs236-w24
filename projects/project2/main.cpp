@@ -28,7 +28,7 @@ public:
     std::string name;
     std::vector<Parameter> parameters;
 
-    Predicate(const std::string& n) : name(n) {}
+    Predicate(const std::string& n, const std::vector<Parameter>& params) : name(n), parameters(params) {}
 
     std::string toString() const {
         std::string result = name + "(";
