@@ -2,6 +2,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include "Token.h"
 #include "Parser.h"
 #include "Scanner.h"
 

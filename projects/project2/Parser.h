@@ -2,6 +2,8 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <string>
+#include "Token.h"
 
 using namespace std;
 
