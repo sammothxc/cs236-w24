@@ -3,6 +3,8 @@
 #include <set>
 #include <algorithm>
 
+using namespace std;
+
 class Parser {
 private:
     vector<Token> tokens;
