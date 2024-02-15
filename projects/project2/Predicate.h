@@ -6,9 +6,23 @@
 
 class Predicate {
 private:
-    Token predicateName;
-    std::vector<Parameter> parameters;
+    std::string name;
+    std::vector<std::string> parameters;
 
 public:
-    // Constructor, Access Methods, Update Methods, toString, etc.
+    Predicate(const std::string& name) : name(name) {}
+
+    void addParameter(const std::string& param) {
+        parameters.push_back(param);
+    }
+
+    std::string toString() const {
+        std::string result = name + "(";
+        for (size_t i = 0; i < parameters.size(); ++i) {
+            if (i > 0) result += ",";
+            result += parameters[i];
+        }
+        result += ")";
+        return result;
+    }
 };
