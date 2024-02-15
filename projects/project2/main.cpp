@@ -1059,7 +1059,7 @@ queue <Token> Scanner::GetList() {
 }
 
 Token::Token() {
-    tokenValue = "BEN FOGG";
+    tokenValue = "SAM WARR";
     lineNumber = -1;
     tokenType = ERROR;
 }
