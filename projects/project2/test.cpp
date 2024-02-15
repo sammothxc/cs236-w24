@@ -311,7 +311,37 @@ DatalogProgram parseDatalogProgram(Scanner& scanner) {
 }
 
 void parseFactList(Scanner& scanner, DatalogProgram& program) {
-    // Implement parsing of fact list here
+    Token token = scanner.scanToken();
+    while (token.getType() == ID) {
+        Predicate fact(token.typeName()); // Corrected here
+
+        // Expect LEFT_PAREN
+        token = scanner.scanToken();
+        if (token.getType() != LEFT_PAREN) {
+            throw std::runtime_error("Expected LEFT_PAREN in fact");
+        }
+
+        // Parse fact parameters and add them to the fact
+        parseStringList(scanner, fact);
+
+        // Expect RIGHT_PAREN
+        token = scanner.scanToken();
+        if (token.getType() != RIGHT_PAREN) {
+            throw std::runtime_error("Expected RIGHT_PAREN in fact");
+        }
+
+        // Expect PERIOD
+        token = scanner.scanToken();
+        if (token.getType() != PERIOD) {
+            throw std::runtime_error("Expected PERIOD after fact");
+        }
+
+        // Add the fact to the Datalog program
+        program.addFact(fact);
+
+        // Get the next token
+        token = scanner.scanToken();
+    }
 }
 
 void parseRuleList(Scanner& scanner, DatalogProgram& program) {
