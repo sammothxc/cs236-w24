@@ -1,68 +1,54 @@
-#ifndef DATALOGPROGRAM_H
-#define DATALOGPROGRAM_H
-
+#pragma once
+#include <string>
 #include <vector>
-#include <set>
+#include "Token.h"
 #include "Predicate.h"
 #include "Rule.h"
 
-class DatalogProgram {
-public:
-    void addScheme(Predicate scheme) {
-        schemes.push_back(scheme);
-    }
-
-    void addFact(Predicate fact) {
-        facts.push_back(fact);
-    }
-
-    void addRule(Rule rule) {
-        rules.push_back(rule);
-    }
-
-    void addQuery(Predicate query) {
-        queries.push_back(query);
-    }
-
-    void addDomainValue(const std::string& value) {
-        domainValues.insert(value);
-    }
-
-    std::string toString() const {
-        std::string result = "Schemes(" + std::to_string(schemes.size()) + "):\n";
-        for (const auto& scheme : schemes) {
-            result += "  " + scheme.toString() + "\n";
-        }
-
-        result += "Facts(" + std::to_string(facts.size()) + "):\n";
-        for (const auto& fact : facts) {
-            result += "  " + fact.toString() + "\n";
-        }
-
-        result += "Rules(" + std::to_string(rules.size()) + "):\n";
-        for (const auto& rule : rules) {
-            result += "  " + rule.toString() + "\n";
-        }
-
-        result += "Queries(" + std::to_string(queries.size()) + "):\n";
-        for (const auto& query : queries) {
-            result += "  " + query.toString() + "\n";
-        }
-
-        result += "Domain(" + std::to_string(domainValues.size()) + "):\n";
-        for (const auto& value : domainValues) {
-            result += "  " + value + "\n";
-        }
-
-        return result;
-    }
-
+// Class representing a list of schemes
+class SchemeList {
 private:
     std::vector<Predicate> schemes;
-    std::vector<Predicate> facts;
-    std::vector<Rule> rules;
-    std::vector<Predicate> queries;
-    std::set<std::string> domainValues;
+
+public:
+    // Methods to add, access, and manipulate schemes
 };
 
-#endif
+// Class representing a list of facts
+class FactList {
+private:
+    std::vector<Predicate> facts;
+
+public:
+    // Methods to add, access, and manipulate facts
+};
+
+// Class representing a list of rules
+class RuleList {
+private:
+    std::vector<Rule> rules;
+
+public:
+    // Methods to add, access, and manipulate rules
+};
+
+// Class representing a list of queries
+class QueryList {
+private:
+    std::vector<Predicate> queries;
+
+public:
+    // Methods to add, access, and manipulate queries
+};
+
+class DatalogProgram {
+private:
+    SchemeList schemes;
+    FactList facts;
+    RuleList rules;
+    QueryList queries;
+    std::set<std::string> domain; // Set to store unique strings
+
+public:
+    // Constructor, Access Methods, Update Methods, toString, etc.
+};
