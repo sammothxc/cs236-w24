@@ -1,7 +1,7 @@
 #pragma once
-#include "token.h"
-#include "datalog.h"
-#include "expression.h"
+#include "Token.h"
+#include "DatalogProgram.h"
+#include "Expression.h"
 #include <queue>
 
 class Parser {

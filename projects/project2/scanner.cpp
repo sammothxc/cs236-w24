@@ -1,5 +1,5 @@
-#include "scanner.h"
-#include "token.h"
+#include "Scanner.h"
+#include "Token.h"
 #include <fstream>
 #include <cctype>
 #include <cstdio> 

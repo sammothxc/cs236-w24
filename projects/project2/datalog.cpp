@@ -1,4 +1,4 @@
-#include "datalog.h"
+#include "DatalogProgram.h"
 #include <sstream>
 
 vector<Rule> Datalog::GetRules() {

@@ -1,4 +1,4 @@
-#include "rules.h"
+#include "Rules.h"
 
 
 void Rule::SetHeadPredicate(Predicate head) {

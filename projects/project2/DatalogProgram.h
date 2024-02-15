@@ -1,6 +1,6 @@
 #pragma once
 #include <set>
-#include "rules.h"
+#include "Rules.h"
 
 enum PredicateType{Facts,Queries,Schemes};
 

@@ -1,4 +1,4 @@
- #include "predicate.h"
+ #include "Predicate.h"
 
 void Predicate::SetName(string theName) {
     Name = theName;

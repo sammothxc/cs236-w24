@@ -1,5 +1,6 @@
-#include "token.h"
-#include "parameter.h"
+#pragma once
+#include "Token.h"
+#include "Parameter.h"
 #include <vector>
 
 class Expression {

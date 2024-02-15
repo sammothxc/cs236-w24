@@ -1,5 +1,5 @@
 #pragma once
-#include "parameter.h"
+#include "Parameter.h"
 #include <vector>
 
 class Predicate {

@@ -1,5 +1,5 @@
 #pragma once
-#include "predicate.h"
+#include "Predicate.h"
 
 class Rule {
     public:
