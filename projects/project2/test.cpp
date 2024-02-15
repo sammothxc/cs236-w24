@@ -146,7 +146,7 @@ private:
 // Rule class
 class Rule {
 public:
-    Rule() : headPredicate(""), predicates({}) {}
+    Rule() {}
     Rule(const Predicate& head, const std::vector<Predicate>& preds) : headPredicate(head), predicates(preds) {}
     
     void setHeadPredicate(const Predicate& head) {
