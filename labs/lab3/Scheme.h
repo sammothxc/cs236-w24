@@ -18,6 +18,4 @@ public:
     const string& at(int index) const {
         return names.at(index);
     }
-
-    // Add more delegation functions as needed
 };
