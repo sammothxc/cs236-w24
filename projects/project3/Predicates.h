@@ -7,7 +7,7 @@
 #include "Lexer.h"
 #include "Parameter.h"
 #include "Utilities.h"
-
+using namespace std;
 
 class HeadPredicate {
 public:
@@ -20,22 +20,18 @@ public:
 		}
 		delete ids;
 	}
-
-
 	HeadPredicate(Lexer& lex) {
 		try {
 			idIs = nullptr;
 			ids = nullptr;
 			idIs = new Id(lex);
 			checkFor(lex, "LEFT_PAREN");
-
 			ids = new vector<Id*>();
 			while (true) {
 				ids->push_back(new Id(lex));
 				if (lex.getCurrentToken().getTokenType() != "COMMA") break;
 				lex.advanceTokens();
 			}
-
 			checkFor(lex, "RIGHT_PAREN");
 		}
 		catch (const std::runtime_error&) {
@@ -52,13 +48,10 @@ public:
 		}
 	}
 };
-
-
 class Predicate {
 public:
 	Id* id;
 	vector<Parameter*>* parameters;
-
 	~Predicate() {
 		delete id;
 		for (unsigned int i = 0; i < parameters->size(); i++) {
@@ -66,7 +59,6 @@ public:
 		}
 		delete parameters;
 	}
-
 	Predicate(Lexer& lex) {
 		try {
 			id = nullptr;
@@ -74,14 +66,11 @@ public:
 			id = new Id(lex);
 			checkFor(lex, "LEFT_PAREN");
 			parameters = new vector<Parameter*>();
-
-
 			while (true) {
 				parameters->push_back(createParameter(lex));
 				if (lex.getCurrentToken().getTokenType() != "COMMA") break;
 				lex.advanceTokens();
 			}
-
 			checkFor(lex, "RIGHT_PAREN");
 		}
 		catch (const std::runtime_error&) {
@@ -98,4 +87,3 @@ public:
 		}
 	}
 };
-

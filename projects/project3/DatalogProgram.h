@@ -16,7 +16,6 @@
 #include "Queries.h"
 using namespace std;
 
-
 class DatalogProgram {
 public:
 	Schemes* schemes;
@@ -24,7 +23,6 @@ public:
 	Rules* rules;
 	Queries* queries;
 	int stage;
-
 	DatalogProgram(Lexer& lex) {
 		try {
 			schemes = new Schemes(lex);
@@ -58,7 +56,6 @@ public:
 
 		}
 	}
-
 	~DatalogProgram() {
 		delete schemes;
 		delete facts;
@@ -77,13 +74,11 @@ public:
 
 	void getDomains() {
 		set<string> domains;
-		// insert facts into domainList
 		for (unsigned int i = 0; i < facts->factList->size(); i++) {
 			for (unsigned int j = 0; j < facts->factList->at(i)->listOfStrings->size(); j++) {
 				domains.insert(facts->factList->at(i)->listOfStrings->at(j)->toString());
 			}
 		}
-		// start printing domains
 		cout << "Domain(" << to_string(domains.size()) << "):" << endl;
 		const auto separator = "\n";
 		const auto* sep = "";
@@ -92,6 +87,4 @@ public:
 			sep = separator;
 		}
 	}
-
-
 };

@@ -12,10 +12,8 @@
 #include "Predicates.h"
 using namespace std;
 
-// Forward Declaration
 void printExpressionOrParameter(vector<Query*>*& queries, int i, int j, int x);
 string printExpressionOrParameterString(vector<Query*>*& queries, int i, int j, int x);
-
 class QueryItem {
 public:
 	string table;
@@ -34,7 +32,6 @@ public:
 		query += ")? ";
 		return query;
 	}
-
 };
 
 class Query {
@@ -43,9 +40,7 @@ public:
 	~Query() {
 		delete firstPart;
 	}
-
 	Query(Lexer& lex) {
-		//super(lex);
 		try {
 			firstPart = nullptr;
 			firstPart = new Predicate(lex);
@@ -58,14 +53,10 @@ public:
 			throw std::runtime_error("Deleted");
 		}
 	}
-
-
 };
-
 class Queries {
 public:
 	vector<Query*>* queries;
-
 	~Queries() {
 		for (unsigned int i = 0; i < queries->size(); i++) {
 			delete queries->at(i);
@@ -91,15 +82,12 @@ public:
 			}
 			throw std::runtime_error("Deleted");
 		}
-
 	}
-
 	void toString() {
 		cout << "Queries(" + to_string(queries->size()) + "):" << endl;
 		for (unsigned int i = 0; i < queries->size(); i++) {
 			cout << "  " << queries->at(i)->firstPart->id->value << "(";
 			for (unsigned int j = 0; j < queries->at(i)->firstPart->parameters->size() - 1; j++) {
-				// implement other parameters/expressions etc.
 				printExpressionOrParameter(queries, i, j, 0);
 				if (j != queries->at(i)->firstPart->parameters->size() - 1) {
 					cout << ",";
@@ -109,7 +97,6 @@ public:
 			cout << ")?" << endl;
 		}
 	}
-
 	vector<QueryItem> getQueries() {
 		string toReturn = "";
 		string tableName;
@@ -130,13 +117,8 @@ public:
 		}
 		return queryList;
 	}
-
 };
-
-
-// Utility for printing Queries
 void printExpressionOrParameter(vector<Query*>*& queries, int i, int j, int x) {
-	// modify to do Queries
 	if (queries->at(i)->firstPart->parameters->at(j)->isExp) {
 		Expression* expString = (Expression *)queries->at(i)->firstPart->parameters->at(j);
 		cout << expString->toString();
@@ -145,10 +127,7 @@ void printExpressionOrParameter(vector<Query*>*& queries, int i, int j, int x) {
 		cout << queries->at(i)->firstPart->parameters->at(j)->toString();
 	}
 }
-
-// Utility for printing Queries
 string printExpressionOrParameterString(vector<Query*>*& queries, int i, int j, int x) {
-	// modify to do Queries
 	if (queries->at(i)->firstPart->parameters->at(j)->isExp) {
 		Expression* expString = (Expression *)queries->at(i)->firstPart->parameters->at(j);
 		return expString->toString();

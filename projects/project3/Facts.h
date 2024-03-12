@@ -11,8 +11,6 @@
 #include "Rules.h"
 using namespace std;
 
-
-
 class Fact {
 public:
 	Id* id;
@@ -24,8 +22,6 @@ public:
 		}
 		delete listOfStrings;
 	}
-
-
 	Fact(Lexer& lex) {
 
 		try {
@@ -33,7 +29,6 @@ public:
 			listOfStrings = nullptr;
 			id = new Id(lex);
 			checkFor(lex, "LEFT_PAREN");
-
 			listOfStrings = new vector<DLString*>();
 			while (true) {
 				listOfStrings->push_back(new DLString(lex));
@@ -58,12 +53,9 @@ public:
 	}
 };
 
-
-
 class Facts {
 public:
 	vector<Fact*>* factList;
-
 	~Facts() {
 		for (unsigned int i = 0; i < factList->size(); i++) {
 			delete factList->at(i);
@@ -90,7 +82,6 @@ public:
 			throw std::runtime_error("Deleted");
 		}
 	}
-
 	void toString() {
 		cout << "Facts(" + to_string(factList->size()) + "):" << endl;
 		for (unsigned int i = 0; i < factList->size(); i++) {
@@ -102,4 +93,3 @@ public:
 		}
 	}
 };
-

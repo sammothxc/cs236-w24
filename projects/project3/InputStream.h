@@ -1,14 +1,11 @@
 #pragma once
-#pragma once
 #include <iostream>
 #include <string>
 #include <list>
 #include <fstream>
 #include <vector>
-#include "token.h"
+#include "Token.h"
 using namespace std;
-
-
 
 class InputStream {
 public:
@@ -18,7 +15,6 @@ public:
 	int getLineNumber() {
 		return currentLine;
 	}
-
 	char getNext() {
 		if (file->peek() == '\n') {
 			currentLine++;
@@ -29,7 +25,6 @@ public:
 		return file->peek();
 	}
 	ifstream* file;
-
 	InputStream(string filename) {
 		file = new ifstream;
 		file->open(filename);
@@ -41,5 +36,4 @@ public:
 		file->close();
 		delete file;
 	}
-
 };

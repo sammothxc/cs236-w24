@@ -4,13 +4,11 @@
 #include <list>
 #include <fstream>
 #include <vector>
-#include "token.h"
+#include "Token.h"
 #include "InputStream.h"
 using namespace std;
 
 enum State { START, ID, ERROR, COLON, PUNCUTATION, END_OF_STRING, STRING, START_OF_COMMENT, SINGLELINE_COMMENT, MULTILINE_COMMENT, VERTICAL_BAR, UNDEFINED};
-
-
 class Lexer {
 public:
 	vector<Token*>* tokenList;
@@ -46,8 +44,6 @@ public:
 	State getID();
 	bool isSpecialID();
 	State getString();
-
-
 	State state;
 	Lexer(string filename);
 	~Lexer() {

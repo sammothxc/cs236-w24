@@ -4,38 +4,28 @@
 #include "Operator.h"
 using namespace std;
 
-// Forward Declarations
 Parameter* createParameter(Lexer& lex);
 void deleteExpOrParam(Parameter* param);
-
-
 class Parameter {
 public:
 	string value;
 	bool isExp;
-
 	Parameter() {
 		isExp = false;
 	}
-
 	string toString() {
 		return value;
 	}
 };
-
 class Id : public Parameter
 {
 public:
-
 	Id(Lexer& lex) {
 		checkType(lex, "ID");
 		value = lex.getCurrentToken().getValue();
 		lex.advanceTokens();
 	}
 };
-
-
-
 class DLString : public Parameter
 {
 public:
@@ -45,32 +35,26 @@ public:
 		lex.advanceTokens();
 	}
 };
-
 class Expression : public Parameter
 {
 public:
 	Parameter* leftParameter;
 	Operator* op;
 	Parameter* rightParameter;
-
 	~Expression() {
 		deleteExpOrParam(leftParameter);
 		deleteExpOrParam(rightParameter);
 		delete op;
 	}
-
-
 	Expression(Lexer& lex) {
 		try {
 			op = nullptr;
 			leftParameter = nullptr;
 			rightParameter = nullptr;
 			checkFor(lex, "LEFT_PAREN");
-
 			leftParameter = createParameter(lex);
 			op = new Operator(lex);
 			rightParameter = createParameter(lex);
-
 			checkFor(lex, "RIGHT_PAREN");
 			isExp = true;
 		}
@@ -88,8 +72,6 @@ public:
 		}
 	}
 };
-
-
 Parameter* createParameter(Lexer& lex) {
 	Parameter* result = nullptr;
 	if (lex.getCurrentToken().getTokenType() == "ID") {
@@ -110,8 +92,6 @@ Parameter* createParameter(Lexer& lex) {
 	}
 	return result;
 }
-
-
 void deleteExpOrParam(Parameter* param) {
 	if (param->isExp) {
 		Expression * exp = (Expression*)param;
@@ -121,5 +101,3 @@ void deleteExpOrParam(Parameter* param) {
 		delete param;
 	}
 }
-
-

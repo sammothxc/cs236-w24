@@ -7,7 +7,8 @@
 #include "Lexer.h"
 #include "Parameter.h"
 #include "Utilities.h"
-#include "header.h"
+#include "Header.h"
+using namespace std;
 
 class Scheme {
 public:
@@ -20,22 +21,18 @@ public:
 		}
 		delete ids;
 	}
-
-
 	Scheme(Lexer& lex) {
 		try {
 			id = nullptr;
 			ids = nullptr;
 			id = new Id(lex);
 			checkFor(lex, "LEFT_PAREN");
-
 			ids = new vector<Id*>();
 			while (true) {
 				ids->push_back(new Id(lex));
 				if (lex.getCurrentToken().getTokenType() != "COMMA") break;
 				lex.advanceTokens();
 			}
-
 			checkFor(lex, "RIGHT_PAREN");
 		}
 		catch (const std::runtime_error&) {
@@ -52,7 +49,6 @@ public:
 		}
 	}
 };
-
 class Schemes {
 public:
 	~Schemes() {
@@ -61,14 +57,12 @@ public:
 		}
 		delete listOfSchemes;
 	}
-
 	Schemes(Lexer& lex) {
 		try {
 			listOfSchemes = nullptr;
 			listOfSchemes = new vector<Scheme*>;
 			checkFor(lex, "SCHEMES");
 			checkFor(lex, "COLON");
-
 			do {
 				listOfSchemes->push_back(new Scheme(lex));
 			} while (lex.getCurrentToken().getTokenType() == "ID");
@@ -93,8 +87,6 @@ public:
 			cout << listOfSchemes->at(i)->ids->at(listOfSchemes->at(i)->ids->size() - 1)->value << ")" << endl;
 		}
 	}
-
-
 	Header getParameters(int i) {
 		Header params;
 		for (unsigned int j = 0; j < listOfSchemes->at(i)->ids->size(); j++) {
@@ -102,7 +94,5 @@ public:
 		}
 		return params;
 	}
-
 	vector<Scheme*>* listOfSchemes;
-
 };

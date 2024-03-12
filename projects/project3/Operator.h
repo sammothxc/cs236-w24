@@ -1,12 +1,10 @@
 #pragma once
 #include<string>
-
 using namespace std;
 
 class Operator {
 public:
 	string op;
-
 	Operator(Lexer& lex) {
 		if (lex.getCurrentToken().getTokenType() == "ADD") {
 			op = "ADD";
@@ -22,7 +20,6 @@ public:
 		}
 		lex.advanceTokens();
 	}
-
 	string toString() {
 		if (op == "ADD") {
 			return "+";
@@ -31,5 +28,4 @@ public:
 			return "*";
 		}
 	}
-
 };
