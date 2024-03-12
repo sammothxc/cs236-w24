@@ -135,6 +135,7 @@ string Parser::ToString() {
 }
 
 Datalog Parser::Parse(queue<Token> Tokens) {
+    bool queries_seen = false;
     TokenQueue = Tokens;
     vector<Predicate> Schemes;
     ParseCheck(SCHEMES); //Schemes
@@ -183,6 +184,7 @@ Datalog Parser::Parse(queue<Token> Tokens) {
     else {
         return Everything;
     }
+    cout << "check1" << endl;
     if (fail == false) {
         vector<Predicate> Queries;
         ParseCheck(QUERIES);
@@ -232,16 +234,16 @@ Predicate Parser::ParseQuery() {
     }
 }
 
-vector<Predicate> Parser::ParseQueryList(vector<Predicate> Queries) {//lambda // NEEEEEEEDS WORK????????
+vector<Predicate> Parser::ParseQueryList(vector<Predicate> Queries) {
     if (fail == false) {
         if (nextToken.GetType() != ID) {
             return Queries;
         }
-        /*I feel like there is a chance that something wrong is going on
-        like if the id but not the right thing*/
         else {
             Queries.push_back(ParseQuery());
             Queries = ParseQueryList(Queries);
+            cout << "check2" << endl;
+            cout << Queries.size() << endl;
             return Queries;
         }
     }
