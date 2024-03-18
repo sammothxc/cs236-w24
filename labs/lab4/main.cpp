@@ -17,51 +17,71 @@ class Tuple {
 public:
     Tuple(const vector<string>& values) : values(values) {}
     string at(size_t index) const { return values.at(index); }
+    string toString(const Scheme& scheme) const {
+        string str;
+        for (size_t i = 0; i < values.size(); ++i) {
+            str += scheme.at(i) + "=" + values[i];
+            if (i < values.size() - 1) {
+                str += ", ";
+            }
+        }
+        return str;
+    }
 private:
     vector<string> values;
 };
 
 class Relation {
 public:
-    static bool joinable(const Scheme& leftScheme, const Scheme& rightScheme,
-                         const Tuple& leftTuple, const Tuple& rightTuple) {
-        for (unsigned leftIndex = 0; leftIndex < leftScheme.size(); leftIndex++) {
-            const string& leftName = leftScheme.at(leftIndex);
-            const string& leftValue = leftTuple.at(leftIndex);
-            cout << "left name: " << leftName << " value: " << leftValue << endl;
+    Relation(const string& name, const Scheme& scheme) : name(name), scheme(scheme) {}
 
-            for (unsigned rightIndex = 0; rightIndex < rightScheme.size(); rightIndex++) {
-                const string& rightName = rightScheme.at(rightIndex);
-                const string& rightValue = rightTuple.at(rightIndex);
-                cout << "right name: " << rightName << " value: " << rightValue << endl;
+    void addTuple(const Tuple& tuple) {
+        tuples.push_back(tuple);
+    }
 
-                // Check if tuples are joinable based on some condition
-                if (leftValue == rightValue) {
-                    return true;
-                }
+    Relation join(const Relation& right) {
+        const Relation& left = *this;
+        Relation result("joined", left.scheme); // Assuming the scheme of the result will be same as left
+
+        for (const auto& leftTuple : left.tuples) {
+            cout << "left tuple: " << leftTuple.toString(left.scheme) << endl;
+
+            for (const auto& rightTuple : right.tuples) {
+                cout << "right tuple: " << rightTuple.toString(right.scheme) << endl;
             }
         }
-        return false;
+
+        return result;
     }
+
+private:
+    string name;
+    Scheme scheme;
+    vector<Tuple> tuples;
 };
 
 int main() {
-    Scheme scheme1({ "A", "B" });
-    Scheme scheme2({ "B", "C" });
+    Relation studentRelation("students", Scheme({ "ID", "Name", "Major" }));
+    vector<string> studentValues[] = {
+        { "'42'", "'Ann'", "'CS'" },
+        { "'64'", "'Ned'", "'EE'" },
+    };
 
-    Tuple tuple1({ "'1'", "'2'" });
-    Tuple tuple2({ "'3'", "'4'" });
+    for (auto& value : studentValues)
+        studentRelation.addTuple(Tuple(value));
 
-    Scheme scheme3({ "X", "Y" });
-    Scheme scheme4({ "X", "Y", "Z" });
+    studentRelation.join(studentRelation);
 
-    Tuple tuple3({ "'1'", "'4'" });
-    Tuple tuple4({ "'1'", "'2'", "'4'" });
+    Relation courseRelation("courses", Scheme({ "ID", "Course" }));
+    vector<string> courseValues[] = {
+        { "'42'", "'CS 100'" },
+        { "'32'", "'CS 232'" },
+    };
 
-    cout << Relation::joinable(scheme1, scheme2, tuple1, tuple2) << endl;
-    cout << Relation::joinable(scheme2, scheme3, tuple1, tuple2) << endl;
-    cout << Relation::joinable(scheme3, scheme4, tuple1, tuple4) << endl;
-    cout << Relation::joinable(scheme3, scheme4, tuple3, tuple4) << endl;
+    for (auto& value : courseValues)
+        courseRelation.addTuple(Tuple(value));
+
+    studentRelation.join(courseRelation);
 
     return 0;
 }
