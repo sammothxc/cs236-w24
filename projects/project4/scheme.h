@@ -1,8 +1,8 @@
 #pragma once
-using namespace std;
 #include <string>
 #include <vector>
 #include <iostream>
+using namespace std;
 
 class Scheme{
     public:
