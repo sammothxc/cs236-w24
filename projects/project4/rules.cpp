@@ -1,3 +1,4 @@
+// ADDED IN PROJECT 2
 #include "rules.h"
 
 void Rule::SetHeadPredicate(Predicate head) {

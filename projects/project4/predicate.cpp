@@ -1,4 +1,5 @@
- #include "predicate.h"
+ // ADDED IN PROJECT 2
+#include "predicate.h"
 
 void Predicate::SetName(string theName) {
     Name = theName;
