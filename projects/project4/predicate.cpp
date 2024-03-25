@@ -3,7 +3,6 @@
 void Predicate::SetName(string theName) {
     Name = theName;
 }
-
 void Predicate::PushPredicate(Parameter theParameter) {
     parameterList.push_back(theParameter);
     return;
@@ -22,7 +21,6 @@ string Predicate::ToString() {
     Pstring = Pstring + ")";
     return Pstring;
 }
-
 vector<Parameter> Predicate::ReturnVector() {
     return parameterList;
 }

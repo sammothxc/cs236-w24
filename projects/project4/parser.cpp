@@ -1,21 +1,14 @@
 #include "parser.h"
 
 Parser::Parser() {}
-
 Parser::~Parser(){}
-
-//PROJECT 3 ALLTERATIONS -----------------------------------------------------------------------------------------
 Datalog Parser::GetDatalog() {
     return Everything;
 }
-//PROJECT 3 ALLTERATIONS -----------------------------------------------------------------------------------------
-
-
 bool Parser::DatalogProgram(queue<Token> Tokens) {
     Parse(Tokens);
     return fail;
 }
-
 string Parser::ToString() {
     if (fail != true) {
         string thing;
@@ -27,31 +20,27 @@ string Parser::ToString() {
         return stringy;
     }
 }
-
 Datalog Parser::Parse(queue<Token> Tokens) {
     TokenQueue = Tokens;
     vector<Predicate> Schemes;
-    ParseCheck(SCHEMES); //Schemes
+    ParseCheck(SCHEMES);
     ParseCheck(COLON);
     Schemes.push_back(ParseScheme());
     Schemes = ParseSchemeList(Schemes);
     if (fail == false) {
         Everything.SetSchemes(Schemes);
-        //cout << "Success! Schemes" << endl;/////////////////////////////////////
     }
     else {
         return Everything;
     }
-
     if(fail == false) {
-        ParseCheck(FACTS);//Facts
+        ParseCheck(FACTS);
         ParseCheck(COLON);
         vector<Predicate> parsedFacts; 
         parsedFacts = ParseFactList(parsedFacts);
         if (fail == false) {
             Everything.SetFacts(parsedFacts);
             Everything.SetDomain(Domain);
-            //cout << "Success! Facts" << endl;///////////////////////////////////////
         }
         else {
             return Everything;
@@ -60,15 +49,13 @@ Datalog Parser::Parse(queue<Token> Tokens) {
     else {
         return Everything;
     }
-
     if(fail == false) {
         vector<Rule> Rules;
-        ParseCheck(RULES);//Rules
+        ParseCheck(RULES);
         ParseCheck(COLON);
         Rules = ParseRuleList(Rules);
         if (fail == false) {
             Everything.SetRules(Rules);
-            //cout << "Success! Rules" << endl;///////////////////////////////////////
         }
         else {
             return Everything;
@@ -85,7 +72,6 @@ Datalog Parser::Parse(queue<Token> Tokens) {
         Queries = ParseQueryList(Queries);
         if ( fail == false) {
             Everything.SetQueries(Queries);
-            //cout << "success! Queries" << endl;///////////////////////////////////////
         }
         else {
             return Everything;
@@ -96,7 +82,6 @@ Datalog Parser::Parse(queue<Token> Tokens) {
     }
     if (fail == false) {
         if (nextToken.GetType() == EOFa) {
-            //cout << "Success!" << endl;
             return Everything;
         }
         else {
@@ -113,7 +98,6 @@ Datalog Parser::Parse(queue<Token> Tokens) {
         return Everything;
     }
 }
-
 Predicate Parser::ParseQuery() {
     Predicate Query;
     if (fail == false) {
@@ -125,14 +109,11 @@ Predicate Parser::ParseQuery() {
         return Query;
     }
 }
-
-vector<Predicate> Parser::ParseQueryList(vector<Predicate> Queries) {//lambda // NEEEEEEEDS WORK????????
+vector<Predicate> Parser::ParseQueryList(vector<Predicate> Queries) {
     if (fail == false) {
         if (nextToken.GetType() != ID) {
             return Queries;
         }
-        /*I feel like there is a chance that something wrong is going on
-        like if the id but not the right thing*/
         else {
             Queries.push_back(ParseQuery());
             Queries = ParseQueryList(Queries);
@@ -143,8 +124,7 @@ vector<Predicate> Parser::ParseQueryList(vector<Predicate> Queries) {//lambda //
         return Queries;
     }
 }
-
-vector<Rule> Parser::ParseRuleList(vector<Rule> RuleList) {// check for lambda
+vector<Rule> Parser::ParseRuleList(vector<Rule> RuleList) {
     if(fail == false) {
         if (nextToken.GetType() == QUERIES) {
             return RuleList;
@@ -159,7 +139,6 @@ vector<Rule> Parser::ParseRuleList(vector<Rule> RuleList) {// check for lambda
         return RuleList;
     }
 }
-
 Rule Parser::ParseRules() {
     Rule theRule;
     vector<Predicate> listOfRules;
@@ -178,9 +157,7 @@ Rule Parser::ParseRules() {
         return theRule;
     }
 }
-
-vector<Predicate> Parser::ParseFactList(vector<Predicate> Facts) { // needs to check for lambda
-    //cout << "FactList" << endl;/////////////////////////////////////////////////////////
+vector<Predicate> Parser::ParseFactList(vector<Predicate> Facts) {
     Predicate newFact;
     if (fail == false) {
         if (nextToken.GetType() == RULES) {
@@ -202,7 +179,6 @@ vector<Predicate> Parser::ParseFactList(vector<Predicate> Facts) { // needs to c
         return Facts;
     }
 }
-
 Predicate Parser::ParseFact() {
     Predicate Facts;
     if (fail == false) {
@@ -225,9 +201,7 @@ Predicate Parser::ParseFact() {
         return Facts;
     } 
 }
-
-void Parser::ParseStringList(){ //check for lambda
-    //cout << "string list" << endl;//////////////////////////////////////////////////////////
+void Parser::ParseStringList(){
     if (fail == false) {
         if (nextToken.GetType() == COMMA) {
             ParseCheck(COMMA);
@@ -243,12 +217,11 @@ void Parser::ParseStringList(){ //check for lambda
         return;
     }
 }
-
 Predicate Parser::ParseScheme() {
     Predicate Schemes;
     if (fail == false) {
         paramList.clear();
-        ParseCheck(ID); ////////////////////////////////////////////////////////////////////
+        ParseCheck(ID);
         Schemes.SetName(thisToken.GetValue());
         ParseCheck(LEFT_PAREN);
         ParseCheck(ID);
@@ -258,15 +231,13 @@ Predicate Parser::ParseScheme() {
         for (unsigned int i = 0; i < paramList.size(); i++) {
             Schemes.PushPredicate(paramList.at(i));
         }
-        //cout << Schemes.ToString() << endl;;
         return Schemes;
     }
     else {
         return Schemes;
     }
 }
-
-vector<Predicate> Parser::ParseSchemeList(vector<Predicate> Schemes) { //check for lambda??
+vector<Predicate> Parser::ParseSchemeList(vector<Predicate> Schemes) {
     Predicate newScheme; 
     if (fail == false) {
         if (nextToken.GetType() == FACTS) {
@@ -283,9 +254,7 @@ vector<Predicate> Parser::ParseSchemeList(vector<Predicate> Schemes) { //check f
         return Schemes;
     }
 }
-
-void Parser::ParseIDList() {//check for lambda???
-    //cout << "Id list" << endl;//////////////////////////////////////////
+void Parser::ParseIDList() {
     if (fail == false) {
         if (nextToken.GetType() == COMMA) {
             ParseCheck(COMMA);
@@ -301,7 +270,6 @@ void Parser::ParseIDList() {//check for lambda???
         return;
     }
 }
-
 bool Parser::CheckNext(TokenType type) {
     if (fail == false) {
         if (nextToken.GetType() == type) {
@@ -316,14 +284,12 @@ bool Parser::CheckNext(TokenType type) {
         return false;
     }
 }
-
 bool Parser::ParseCheck(TokenType type) {
-    if (fail == false) { // syntax may need to be changed to fail != true
+    if (fail == false) {
         if (nextToken.GetType() != EOFa) {
             thisToken = TokenQueue.front();
             TokenQueue.pop();
             nextToken = TokenQueue.front();
-            //cout << thisToken.toString() << endl;////////////////////////////////////////////////////////////////////////////
             if (thisToken.GetType() == type) {
                 return true; 
             }
@@ -332,39 +298,29 @@ bool Parser::ParseCheck(TokenType type) {
                 return false;
             }
         }
-        else {//////////////////////////////////////////////////////////////////////////
+        else {
             thisToken = TokenQueue.front();
-            //cout << "we are here" << endl;/////////////////////////////////////////////
-            //TokenQueue.pop();///////////////////////////////////////////////////////////
-            return true;////////////////////////////////////////////////////////////////
+            return true;
         }
     }
     else {
         if (nextToken.GetType() != EOFa) {
-            //cout << "we are here?" << endl;
             thisToken = TokenQueue.front();
-            //cout << thisToken.toString() << endl;
             TokenQueue.pop();
             nextToken = TokenQueue.front();
-            //cout << "we are here?" << endl;
         }
         else {
             thisToken = TokenQueue.front();
-            //cout << "we are here" << endl;
         }
         return false;
     }
 }
-
 void Parser::PrintFail(int i) {
     cout << "Failure!" << "\n  (" << thisToken.TypeString() << ",\"" <<thisToken.GetValue() <<"\"," << i << ")" << endl;
     fail = true;
     return;
 }
-
-//Predicate Stuff
 Predicate Parser::ParseHeadPredicate() {
-    //cout << "Head predicate" << endl;////////////////////////////////////////////
     Predicate headPredicate;
     if (fail == false) {
         paramList.clear();
@@ -384,9 +340,7 @@ Predicate Parser::ParseHeadPredicate() {
         return headPredicate;
     }
 }
-
-vector<Predicate> Parser::ParsePredicateList(vector<Predicate> list) { //lamda
-    //cout << "PredicateList" << endl;///////////////////////////////////////////////
+vector<Predicate> Parser::ParsePredicateList(vector<Predicate> list) {
     if (fail == false) {
         if (nextToken.GetType() == COMMA) {
             ParseCheck(COMMA);
@@ -402,16 +356,13 @@ vector<Predicate> Parser::ParsePredicateList(vector<Predicate> list) { //lamda
         return list;
     }
 }
-
 Predicate Parser::ParsePredicate(){
-    //cout << "Predicate" << endl;/////////////////////////////////////////////////////
     Predicate Predicates;
     Parameter newParam;
     if (fail == false) {
         paramList.clear();
         ParseCheck(ID);
         Predicates.SetName(thisToken.GetValue());
-        //PushOnList(thisToken.GetValue());
         ParseCheck(LEFT_PAREN);
         newParam = ParseParameter();
         PushOnList(newParam.ToString(), newParam.IsString());
@@ -426,7 +377,6 @@ Predicate Parser::ParsePredicate(){
         return Predicates;
     }
 }
-
 void Parser::PushOnList(string token, bool StringAlt) {
     Parameter newParam;
     if (thisToken.GetValue() != "") {
@@ -438,22 +388,17 @@ void Parser::PushOnList(string token, bool StringAlt) {
     }
     return;
 }
-
 Parameter Parser::ParseParameter() {
-    //cout << "Parameter" << endl;//////////////////////////////////////////////////////
     Parameter newParam;
     if (fail == false) {
         Token toSend = nextToken;
         if (nextToken.GetType() == STRING) {
-            //cout << "string";
             ParseCheck(STRING);
             newParam.SetParam(thisToken.GetValue());
             newParam.SetBool(true);
-           // Alteration in lab 3 made above--------^^^^--------------------------------------------------------------------------------------            return newParam;
             return newParam;
         }   
         else if (nextToken.GetType() == ID) {
-            //cout << "ID";
             ParseCheck(ID);
             newParam.SetParam(thisToken.GetValue());
             newParam.SetBool(false);
@@ -464,14 +409,11 @@ Parameter Parser::ParseParameter() {
             stringy = ParseExpression();
             stringy = "(" + stringy + ")";
             newParam.SetParam(stringy);
-            //CheckNext(RIGHT_PAREN);////////////////////
-            //cout << newParam.ToString();
             return newParam;
         }
-        //check --------------------------------------------------------------------------------------------
         else {
             thisToken = nextToken;
-            CheckNext(ERROR);/////////////////////////////////////////////////////////////////////////////////////////
+            CheckNext(ERROR);
             return newParam;
         }
     }
@@ -479,9 +421,7 @@ Parameter Parser::ParseParameter() {
         return newParam;
     }
 }
-
-void Parser::ParseParameterList() { // lambda
-    //cout << "Parameter List" << endl;/////////////////////////////////////////////////////////
+void Parser::ParseParameterList() {
     if (fail == false) {
         if (nextToken.GetType() == RIGHT_PAREN) {
             return;
@@ -499,13 +439,10 @@ void Parser::ParseParameterList() { // lambda
         return;
     }
 }
-
 string Parser::ParseExpression() {
-    //cout << "Expression" << endl;
     if (fail == false) {
         Expression theExpression;
         Parameter newParam;
-
         ParseCheck(LEFT_PAREN);
         newParam = ParseParameter();
         theExpression.SetRight(newParam);
@@ -513,9 +450,7 @@ string Parser::ParseExpression() {
         theExpression.SetOperator(newParam);
         newParam = ParseParameter();
         theExpression.SetLeft(newParam);
-        //ParseParameter();
         ParseCheck(RIGHT_PAREN);
-
         return theExpression.GetExpression();
     }
     else {
@@ -523,9 +458,7 @@ string Parser::ParseExpression() {
         return list;
     }
 }
-
 Token Parser::ParseOperator() {
-    //cout << "Operator" << endl;/////////////////////////////////////////////////////////////////////
     if (fail == false) {
         if (nextToken.GetType() == ADD) {
             ParseCheck(ADD);

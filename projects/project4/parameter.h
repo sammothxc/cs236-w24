@@ -12,6 +12,6 @@ class Parameter {
         bool IsString() {
             return boolString;
         }
-        string theParameter; // Needs to be changed to string
+        string theParameter;
         bool boolString;
 };

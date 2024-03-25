@@ -59,7 +59,6 @@ string Datalog::ToString() {
     for (it = Domain.begin(); it != Domain.end(); it++) {
         ss << "  " << *it << "\n";
     }
-
     string thing = ss.str();
     return thing;
 }

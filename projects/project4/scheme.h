@@ -21,7 +21,6 @@ class Scheme{
     string At(int i) {
         return values.at(i);
     }
-
     string Fake() {
         string stringy;
         for (unsigned int i = 0; i < values.size(); i ++) {

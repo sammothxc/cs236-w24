@@ -5,10 +5,6 @@ using namespace std;
 #include <iostream>
 
 class Tuple : public vector<string> {
-    /*
-    bool operator< (const Tuple & other) const {
-    }
-    */
     bool beenOutputted;
     vector <string> values;
     string At (int num) {

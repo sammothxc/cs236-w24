@@ -15,9 +15,7 @@ int main (int argc, char* argv[]) {
         Interpreter myInterpreter;
         bool trueorfalse = myParser.DatalogProgram(myScanner.GetList());
         if (trueorfalse == false) {
-            //myParser.ToString();
             myInterpreter.SetDatalog(myParser.GetDatalog());
-            //cout << myInterpreter.ToString();
         }
     }
     return 0;

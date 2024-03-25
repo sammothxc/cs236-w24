@@ -1,22 +1,18 @@
 #include "token.h"
 
 Token::Token() {
-    tokenValue = "BEN FOGG";
+    tokenValue = "";
     lineNumber = -1;
     tokenType = ERROR;
 }
-
 Token::~Token() {
 }
-
 int Token::GetLineNumber(){
     return lineNumber;
 }
-
 TokenType Token::GetType() {
     return tokenType;
 }
-
 string Token::toString() {
     string theToken;
     string type = "ERROR1";
@@ -81,7 +77,6 @@ string Token::toString() {
     theToken = "(" + type + ",\"" + tokenValue + "\"," + to_string(lineNumber) + ")";
     return theToken;
 }
-
 void Token::SetValues(string myString ,int lineNum) {
         lineNumber = lineNum;
         tokenValue = myString;
@@ -128,13 +123,10 @@ void Token::SetValues(string myString ,int lineNum) {
         tokenType = EOFa;
         tokenValue = "";
     }
-    //NEED TO ADD STRINGS AND COMMENTS and IDs
     else {
         tokenType = UNDEFINED;
     }
-
 }
-
 void Token::SetComplexValues (string type, string token, int lineNum) {
     if (type == "ID") {
         tokenType = ID;
@@ -143,23 +135,22 @@ void Token::SetComplexValues (string type, string token, int lineNum) {
     }
     else if ( type == "COMMENT") {
         tokenType = COMMENT;
-        tokenValue = token; // may need to be modified
+        tokenValue = token; 
         lineNumber = lineNum;
     }
     else if (type == "STRING") {
         tokenType = STRING;
-        tokenValue = token; // may need ot be modified
+        tokenValue = token;
         lineNumber = lineNum;
 
     }
     else if (type == "UNDEFINED") {
         tokenType = UNDEFINED;
-        tokenValue = token; // may need to be modified
+        tokenValue = token;
         lineNumber = lineNum;
 
     }
 }
-
 string Token::TypeString() {
     string type = "ERROR1";
     switch (tokenType) {
@@ -223,7 +214,6 @@ string Token::TypeString() {
     }
     return type;
 }
-
 string Token::GetValue() {
     return tokenValue;
 }

@@ -4,11 +4,9 @@
 #include <sstream>
 
 class Database {
-    //map<string, Relation> databaseseses;
-
 public:
     map<string, Relation> databaseseses;
-    void AddRelation(string Name, Relation newRelation) { // how the hell am I supposed to know 
+    void AddRelation(string Name, Relation newRelation) {
         databaseseses.insert({Name, newRelation});
         return;
     }
@@ -16,17 +14,15 @@ public:
         databaseseses.at(Name).AddTuple(theTuple);
         return;
     }
-    
     string ToStirng() {
         stringstream stringy;
         map<string, Relation> ptr;
-        for (auto i: databaseseses) { // Problems out putting look here and check with project 3
+        for (auto i: databaseseses) {
             cout  <<  i.first << ": \n";
             i.second.ToString();
         }
         return stringy.str();
     }
-    
     Relation GetRelation(string Name) {
         return databaseseses.at(Name);
     }

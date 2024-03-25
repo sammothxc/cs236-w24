@@ -3,7 +3,6 @@
 #include "rules.h"
 
 enum PredicateType{Facts,Queries,Schemes};
-
 class Datalog {
     public:
         void SetFacts(vector<Predicate> Fact);

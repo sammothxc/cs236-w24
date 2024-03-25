@@ -9,7 +9,6 @@ void Interpreter::SetDatalog(Datalog thisDatalog){
     cout << "Query Evaluation" << endl;
     RelationQueries(theDatalog.GetQueries());
 }
-
 void Interpreter::SchemesToDatabase(vector<Predicate> Predicates) {
     for(unsigned int i = 0; i < Predicates.size(); i++) {
         string theName = Predicates.at(i).GetName();
@@ -24,7 +23,6 @@ void Interpreter::SchemesToDatabase(vector<Predicate> Predicates) {
     }
     return;
 }
-
 void Interpreter::FactsToDatabase(vector<Predicate> Facts) {
     for (unsigned int j = 0; j < Facts.size(); j++) {
         string theName;
@@ -40,8 +38,6 @@ void Interpreter::FactsToDatabase(vector<Predicate> Facts) {
 void Interpreter::RelationQueries(vector<Predicate> Queries){
 
     for (unsigned int i = 0; i < Queries.size(); i++) {
-        //=====
-        //cout << "try new=====================================" << endl;
         Relation aRelation = EvalutatePredicate(Queries.at(i));
         cout << Queries.at(i).ToString() << "? ";
         if (aRelation.DemTuples.size() == 0) {
@@ -54,7 +50,6 @@ void Interpreter::RelationQueries(vector<Predicate> Queries){
     }
     return;
 }
-//===================================================================================================NEW PROJECT 4 =====================================================
 Relation Interpreter::EvalutatePredicate(Predicate Queries) {
         string theName = Queries.GetName();
         vector<int> theInts;
@@ -84,8 +79,6 @@ Relation Interpreter::EvalutatePredicate(Predicate Queries) {
         thisRelation = thisRelation.Rename(theStrings);
         return thisRelation;
 }
-
-
 void Interpreter::RelationRules(vector<Rule> Rules){
     cout << "Rule Evaluation" << endl;
     bool moreTuples = true;
@@ -101,8 +94,6 @@ void Interpreter::RelationRules(vector<Rule> Rules){
                 Relation thisRelation = EvalutatePredicate(Rules.at(i).RuleList.at(j));
                 theRelations.push_back(thisRelation);
             }
-            
-            // Join
             Relation thisRelation;
             if (theRelations.size() > 1) {
                 thisRelation = theRelations.at(0);
@@ -113,53 +104,22 @@ void Interpreter::RelationRules(vector<Rule> Rules){
             else {
                 thisRelation = theRelations.at(0);
             }
-            //Project
-            //What the heck is going on???
             vector <int> Indicies;
             for (unsigned int j = 0; j < Rules.at(i).Head.parameterList.size(); j++) {
-                //cout << Rules.at(i).Head.parameterList.at(j).ToString() << " | " << thisRelation.TheScheme.Fake();
                 for (unsigned int k = 0; k < thisRelation.TheScheme.Size(); k++) {
-                    //cout << Rules.at(i).Head.parameterList.at(j).theParameter << "|" << thisRelation.TheScheme.At(k) << endl;
                     if (Rules.at(i).Head.parameterList.at(j).theParameter == thisRelation.TheScheme.At(k)) {
                         Indicies.push_back(k);
-                        //cout << "got pushed back" << endl;
                     }
                 }
             }
-            //cout << "indicies: " <<Indicies.size() << endl;
             thisRelation = thisRelation.Project(Indicies);
-            //Rename
             thisRelation.name = Rules.at(i).Head.Name;
             if (theDatabase.databaseseses.at(thisRelation.name).TheScheme.values.size() == thisRelation.TheScheme.values.size()) {
                 thisRelation.TheScheme = theDatabase.databaseseses.at(thisRelation.name).TheScheme;
             }
             else {
-                //cout << "abort" << endl;
             }
-            /*
-            cout << "Scheme end:" ;
-            for (unsigned int i = 0; i < theDatabase.databaseseses.at(thisRelation.name).TheScheme.values.size(); i++) {
-                cout << theDatabase.databaseseses.at(thisRelation.name).TheScheme.values.at(i);
-            }
-            cout << endl;
-            thisRelation.Rename(theDatabase.databaseseses.at(thisRelation.name).TheScheme.values);
-            cout << "Scheme end:" ;
-            for (unsigned int i = 0; i < thisRelation.TheScheme.values.size(); i++) {
-                cout << thisRelation.TheScheme.values.at(i);
-            }
-            */
-            //Union
             shouldGoOn.push_back(theDatabase.databaseseses.at(thisRelation.name).Unite(thisRelation));
-        
-            //output
-            /*
-            if (theDatabase.databaseseses.at(thisRelation.name).DemTuples.size() == 0) {}
-            else {
-                if (theDatabase.databaseseses.at(thisRelation.name).BeenOutPutted == false) {
-                    thisRelation.ToString();
-                }
-            }  
-            */
         }
         for (unsigned int a = 0; a <shouldGoOn.size(); a++) {
             if (shouldGoOn.at(a)) {
@@ -170,8 +130,6 @@ void Interpreter::RelationRules(vector<Rule> Rules){
     cout << endl << "Schemes populated after " << rulesPass << " passes through the Rules." << endl << endl;;
     return;
 }
-
-//==================================================================================================================
 string Interpreter::ToString() {
     return theDatabase.ToStirng();
 }

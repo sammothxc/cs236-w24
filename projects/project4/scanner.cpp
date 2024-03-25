@@ -4,7 +4,6 @@
 #include <cctype>
 #include <cstdio> 
 #include <sstream> 
-// it is having trouble with the initial condition compiling them more than once
 
 Scanner::Scanner(string nameOfFile) {
     fileName = nameOfFile;
@@ -14,13 +13,10 @@ Scanner::Scanner(string nameOfFile) {
     currentstate = init;
     file.open(fileName);
     facts = "==";
-    //initial = 1;
 }
-
 Scanner::~Scanner() {
     file.close();
 }
-
 bool Scanner::IsWhiteSpace() {
     if (currentChar == ' ' || currentChar == '\t' || currentChar == '\n' || currentChar == '\r') {
         return true;
@@ -29,8 +25,6 @@ bool Scanner::IsWhiteSpace() {
         return false;
     }
 }
-
-
 string Scanner::WordExtractor() {
     string newWord;
     char wordChar;
@@ -46,12 +40,10 @@ string Scanner::WordExtractor() {
     }            
     return newWord;
 }
-
 int Scanner::LineGenerator() {
     currentLine++;
     return currentLine;
 }
-
 void Scanner::tokenize() {
     while (file.good()) {
         Token newToken;
@@ -63,9 +55,8 @@ void Scanner::tokenize() {
             currentChar = file.get();
         }
         newToken = StateMachine();
-        if /*(*/(!(IsWhiteSpace()) /*&& initial == 0)*/) { // change to newline and stuff that doesn't make a token
+        if (!(IsWhiteSpace())) {
             if (newToken.GetType() == COMMENT) {
-                //cout << "Comment Ignored" << endl;
             }
             else {
                 tokenList.push(newToken);
@@ -74,25 +65,18 @@ void Scanner::tokenize() {
         else if (currentChar == EOF) {
             tokenList.push(newToken);
         }
-        //initial = 0;
     }
     return;
 }
-
 Token Scanner::StateMachine() {
     Token newToken;
     currentstate = init;
     while (currentstate != sFinal) {
         switch(currentstate) {
-            case (init): // ----------------------------------------------- init CASE ---------------------------------------------------
+            case (init):
                 if(currentChar == EOF){
                     currentstate = sEOF;
                 }
-                /*
-                else if (initial == 1) {
-                    currentstate = sFinal;
-                }
-                */
                 else if (currentChar == ','|| currentChar == '.'|| currentChar == '?'||
                     currentChar == '('|| currentChar == ')'|| currentChar == '*'||
                     currentChar == '+'|| currentChar == ':') {
@@ -125,8 +109,7 @@ Token Scanner::StateMachine() {
                 }
                 break;
 
-            case (sChar): //----------------------------------------------- sChar CASE -----------------------------------------------------
-            // ---------------------------------------- Identifies ":" ":-" "," "." "(" ")" "*" "+" ----------------------------------------
+            case (sChar):
                 if (currentChar == ':') {
                     nextChar = file.get();
                     if (nextChar == '-') {
@@ -146,11 +129,9 @@ Token Scanner::StateMachine() {
                     return newToken;
                 }
                 break;
-
-            case (sSpecial): // ----------------------------------------- sSpecial CASE ----------------------------------------------------
-            // -----------------------------------------------I dentifies the "Facts", "Queries", "Rules", "Schemes" -----------------------
+            case (sSpecial):
                 facts = WordExtractor();
-                if (currentChar == 'F') { // THIS IS TO IDENTIFY THE FACTS KEYWORD
+                if (currentChar == 'F') {
                     if (facts == "Facts") {
                         newToken.SetValues(facts, currentLine);
                         return newToken;
@@ -159,7 +140,7 @@ Token Scanner::StateMachine() {
                         currentstate = sID;
                     }
                 }
-                else if (currentChar == 'S') { // THIS IS TO IDENTIFY THE SCHEMES KEYWORD
+                else if (currentChar == 'S') {
                     if (facts == "Schemes") {
                         newToken.SetValues(facts, currentLine);
                         return newToken;
@@ -168,7 +149,7 @@ Token Scanner::StateMachine() {
                         currentstate = sID;
                     }
                 }
-                else if (currentChar == 'Q') { // THIS IS TO IDENTIFY THE QUERIES KEYWORD
+                else if (currentChar == 'Q') {
                     if (facts == "Queries") {
                         newToken.SetValues(facts, currentLine);
                         return newToken;
@@ -177,7 +158,7 @@ Token Scanner::StateMachine() {
                         currentstate = sID;
                     }
                 }
-                else if (currentChar == 'R') { // THIS IS TO IDENTIFY THE RULES KEY WORD
+                else if (currentChar == 'R') {
                     if (facts == "Rules") {
                         newToken.SetValues(facts, currentLine);
                         return newToken;
@@ -190,11 +171,8 @@ Token Scanner::StateMachine() {
                     currentstate = sID;
                 }
                 break;
-
-            case (sComment)://---------------------------------------------------sComment-------------------------------------------------
-            // not working for the special case that it reaches the end without getting the closing comment identifier
+            case (sComment):
                 nextChar = file.get();
-                //block comment
                 currentChar = nextChar;
                 if (currentChar == '|') {
                     int otherlines = 0;
@@ -214,7 +192,6 @@ Token Scanner::StateMachine() {
                         else if (nextChar == EOF) {
                             isEOF = true;
                         }
-
                         if (currentChar == '\r' || currentChar == '\n'){
                             otherlines = otherlines + 1;
                             bcom.append("\n");
@@ -229,8 +206,8 @@ Token Scanner::StateMachine() {
                     }
                     if (isEOF) {
                         newToken.SetComplexValues("UNDEFINED", bcom, currentLine);
-                        tokenList.push(newToken);//////////////////////////////////////////////////////////////////////////////////////////////
-                        newToken.SetValues("EOF", currentLine + otherlines);/////////////////////////////////////////////////////////////////////////////////
+                        tokenList.push(newToken);
+                        newToken.SetValues("EOF", currentLine + otherlines);
                         currentChar = EOF;
                        return newToken;
                     }
@@ -242,7 +219,6 @@ Token Scanner::StateMachine() {
                     }
                     currentChar = file.get();
                 }
-                //line comment
                 else {
                     string comment = "#";
                     comment = comment + currentChar;
@@ -258,12 +234,9 @@ Token Scanner::StateMachine() {
                     newToken.SetComplexValues("COMMENT", comment, currentLine);
                     return newToken;
                 }
-                
-                
             break;
-            case (sString)://-----------------------------------------------------sString CASE -------------------------------------
+            case (sString):
                 currentChar = file.get();
-                //general case: goes until reaches another '
                 if (currentChar == '\'') {
                     string mstr = "\'";
                     int otherlines = 0;
@@ -272,13 +245,12 @@ Token Scanner::StateMachine() {
                             otherlines++;
                         }
                         nextChar = file.peek();
-                        if (currentChar == '\'' && nextChar == '\'') { // special case that back to back '' are found
+                        if (currentChar == '\'' && nextChar == '\'') {
                             currentChar = file.get();
                             nextChar = file.peek();
                             mstr = mstr + currentChar + "\'";
-
                         }
-                        else if (currentChar == '\'' && nextChar != '\''){  // single ' is found
+                        else if (currentChar == '\'' && nextChar != '\''){
                             mstr = mstr + "\'";
                             newToken.SetComplexValues("STRING", mstr, currentLine);
                             currentLine = currentLine + otherlines;
@@ -287,8 +259,8 @@ Token Scanner::StateMachine() {
                         }
                         else if (nextChar == EOF) {
                             newToken.SetComplexValues("UNDEFINED", mstr, currentLine);
-                            tokenList.push(newToken);/////////////////////////////////////////////////////////////////////
-                            newToken.SetValues("EOF", currentLine + otherlines);////////////////////////////////////////////////////////
+                            tokenList.push(newToken);
+                            newToken.SetValues("EOF", currentLine + otherlines);
                             currentChar = EOF;
                             return newToken;
                             break;
@@ -311,13 +283,12 @@ Token Scanner::StateMachine() {
                             otherlines++;
                         }
                         nextChar = file.peek();
-                        if (currentChar == '\'' && nextChar == '\'') { // special case that back to back '' are found
+                        if (currentChar == '\'' && nextChar == '\'') {
                             currentChar = file.get();
                             nextChar = file.peek();
                             mstr = mstr + currentChar + "\'";
-
                         }
-                        else if (currentChar == '\'' && nextChar != '\''){  // single ' is found
+                        else if (currentChar == '\'' && nextChar != '\''){
                             mstr = mstr + "\'";
                             newToken.SetComplexValues("STRING", mstr, currentLine);
                             currentLine = currentLine + otherlines;
@@ -327,8 +298,8 @@ Token Scanner::StateMachine() {
                         else if (nextChar == EOF) {
                             mstr += currentChar;
                             newToken.SetComplexValues("UNDEFINED", mstr, currentLine);
-                            tokenList.push(newToken);/////////////////////////////////////////////////////////////////////
-                            newToken.SetValues("EOF", currentLine + otherlines);////////////////////////////////////////////////////////
+                            tokenList.push(newToken);
+                            newToken.SetValues("EOF", currentLine + otherlines);
                             currentChar = EOF;
                             return newToken;
                             break;
@@ -340,18 +311,18 @@ Token Scanner::StateMachine() {
                     }
                 }
             break;
-            case (sID): //---------------------------------------------------------- sID CASE ---------------------------------------
+            case (sID):
                 newToken.SetComplexValues("ID", facts, currentLine);
                 return newToken;
                 break;
-            case (sEOF): // -------------------------------------------------------- EOF CASE ---------------------------------------
+            case (sEOF):
                 newToken.SetValues("EOF", currentLine);
                 return newToken;
                 break;
-            case (sWhiteSpace): //-------------------------------------------------- WhiteSpace CASE --------------------------------
+            case (sWhiteSpace):
                 currentstate = sFinal;
                 break;
-            case (sFinal): // ------------------------------------------------------ sFinal CASE ------------------------------------
+            case (sFinal):
                 return newToken;
                 break;
             default:
@@ -361,7 +332,6 @@ Token Scanner::StateMachine() {
     newToken.SetComplexValues("UNDEFINED", "UNDEFINED", currentLine);
     return newToken;
 }
-
 queue <Token> Scanner::GetList() {
     return tokenList;
 }
