@@ -1,6 +1,7 @@
 // main.cpp
-#include "Graph.h"
+
 #include <iostream>
+#include "Node.h"
 
 int main() {
     Node node;
@@ -8,13 +9,6 @@ int main() {
     node.addEdge(8);
     node.addEdge(2);
     std::cout << node.toString() << std::endl;
-
-    Graph graph(3);
-    graph.addEdge(1, 2);
-    graph.addEdge(1, 0);
-    graph.addEdge(0, 1);
-    graph.addEdge(1, 1);
-    std::cout << graph.toString();
 
     return 0;
 }
