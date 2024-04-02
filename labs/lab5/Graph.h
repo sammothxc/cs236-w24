@@ -1,12 +1,13 @@
 // Graph.h
+
 #ifndef GRAPH_H
 #define GRAPH_H
 
 #include "Node.h"
 #include <map>
+#include <iostream>
 
 class Graph {
-
 private:
     std::map<int, Node> nodes;
 
