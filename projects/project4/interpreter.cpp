@@ -133,3 +133,4 @@ void Interpreter::RelationRules(vector<Rule> Rules){
 string Interpreter::ToString() {
     return theDatabase.ToStirng();
 }
+
