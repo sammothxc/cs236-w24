@@ -1,11 +1,9 @@
-// Graph.h
-
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "Node.h"
 #include <map>
-#include <iostream>
+#include <string>
+#include "Node.h"
 
 class Graph {
 private:
@@ -13,8 +11,9 @@ private:
 
 public:
     Graph(int size) {
-        for (int nodeID = 0; nodeID < size; nodeID++)
+        for (int nodeID = 0; nodeID < size; nodeID++) {
             nodes[nodeID] = Node();
+        }
     }
 
     void addEdge(int fromNodeID, int toNodeID) {
@@ -25,8 +24,8 @@ public:
         std::string result;
         for (const auto& pair : nodes) {
             int nodeID = pair.first;
-            result += "R" + std::to_string(nodeID) + ":";
-            result += pair.second.toString() + "\n";
+            const Node& node = pair.second;
+            result += "R" + std::to_string(nodeID) + ":" + node.toString() + "\n";
         }
         return result;
     }
