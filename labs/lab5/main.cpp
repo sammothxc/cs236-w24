@@ -1,19 +1,18 @@
-// main.cpp
 #include <iostream>
 #include "Interpreter.h"
 
 int main() {
-    // predicate names for fake rules
-    // first is name for head predicate
-    // second is names for body predicates
-    std::pair<std::string, std::vector<std::string>> ruleNames[] = {
-        {"A", {"B"}},
-        {"B", {"B", "A"}},
+    std::pair<std::string, std::vector<std::string>> ruleNames2[] = {
+        {"A", {"B", "C"}},
+        {"B", {"A", "D"}},
+        {"B", {"B"}},
+        {"E", {"F", "G"}},
+        {"E", {"E", "F"}},
     };
 
     std::vector<Rule> rules;
 
-    for (auto& rulePair : ruleNames) {
+    for (auto& rulePair : ruleNames2) {
         std::string headName = rulePair.first;
         Rule rule = Rule(Predicate(headName));
         std::vector<std::string> bodyNames = rulePair.second;
@@ -22,8 +21,8 @@ int main() {
         rules.push_back(rule);
     }
 
-    Graph graph = Interpreter::makeGraph(rules);
-    std::cout << graph.toString();
+    Graph graph2 = Interpreter::makeGraph(rules);
+    std::cout << graph2.toString();
 
     return 0;
 }

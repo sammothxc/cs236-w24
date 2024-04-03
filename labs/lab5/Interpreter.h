@@ -1,34 +1,33 @@
-// Interpreter.h
-#ifndef INTERPRETER_H
-#define INTERPRETER_H
-
 #include "Graph.h"
 #include "Rule.h"
 #include <vector>
 #include <iostream>
+#include <unordered_map>
 
 class Interpreter {
 public:
     static Graph makeGraph(const std::vector<Rule>& rules) {
         Graph graph(rules.size());
+        std::unordered_map<std::string, int> ruleIndices;
+
+        // Associate rule names with indices
+        for (size_t i = 0; i < rules.size(); ++i) {
+            const std::string& ruleName = rules[i].getHeadPredicate().getName();
+            ruleIndices[ruleName] = i;
+        }
+
+        // Create edges based on rule dependencies
         for (size_t i = 0; i < rules.size(); ++i) {
             const Rule& fromRule = rules[i];
-            std::cout << "from rule R" << i << ": " << fromRule.toString() << std::endl;
             for (const Predicate& bodyPredicate : fromRule.getBodyPredicates()) {
-                std::cout << "from body predicate: " << bodyPredicate.toString() << std::endl;
-                for (size_t j = 0; j < rules.size(); ++j) {
-                    const Rule& toRule = rules[j];
-                    std::cout << "to rule R" << j << ": " << toRule.toString() << std::endl;
-                    if (fromRule.getHeadPredicate().getName() == bodyPredicate.getName() &&
-                        toRule.getHeadPredicate().getName() == bodyPredicate.getName()) {
-                        graph.addEdge(i, j);
-                        std::cout << "dependency found: (R" << i << ",R" << j << ")" << std::endl;
-                    }
+                const std::string& bodyName = bodyPredicate.getName();
+                auto it = ruleIndices.find(bodyName);
+                if (it != ruleIndices.end()) {
+                    int toNodeId = it->second;
+                    graph.addEdge(i, toNodeId);
                 }
             }
         }
         return graph;
     }
 };
-
-#endif // INTERPRETER_H
