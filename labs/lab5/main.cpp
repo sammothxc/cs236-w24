@@ -1,19 +1,28 @@
 // main.cpp
 #include <iostream>
-#include "Graph.h"
+#include "Interpreter.h"
 
 int main() {
-    Node node;
-    node.addEdge(4);
-    node.addEdge(8);
-    node.addEdge(2);
-    std::cout << node.toString() << std::endl;
+    // predicate names for fake rules
+    // first is name for head predicate
+    // second is names for body predicates
+    std::pair<std::string, std::vector<std::string>> ruleNames[] = {
+        {"A", {"B"}},
+        {"B", {"B", "A"}},
+    };
 
-    Graph graph(3);
-    graph.addEdge(1, 2);
-    graph.addEdge(1, 0);
-    graph.addEdge(0, 1);
-    graph.addEdge(1, 1);
+    std::vector<Rule> rules;
+
+    for (auto& rulePair : ruleNames) {
+        std::string headName = rulePair.first;
+        Rule rule = Rule(Predicate(headName));
+        std::vector<std::string> bodyNames = rulePair.second;
+        for (auto& bodyName : bodyNames)
+            rule.addBodyPredicate(Predicate(bodyName));
+        rules.push_back(rule);
+    }
+
+    Graph graph = Interpreter::makeGraph(rules);
     std::cout << graph.toString();
 
     return 0;
