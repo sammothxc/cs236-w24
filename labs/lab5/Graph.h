@@ -1,19 +1,19 @@
+// Graph.h
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include <map>
-#include <string>
 #include "Node.h"
+#include <map>
 
 class Graph {
+
 private:
     std::map<int, Node> nodes;
 
 public:
     Graph(int size) {
-        for (int nodeID = 0; nodeID < size; nodeID++) {
+        for (int nodeID = 0; nodeID < size; nodeID++)
             nodes[nodeID] = Node();
-        }
     }
 
     void addEdge(int fromNodeID, int toNodeID) {
@@ -24,8 +24,8 @@ public:
         std::string result;
         for (const auto& pair : nodes) {
             int nodeID = pair.first;
-            const Node& node = pair.second;
-            result += "R" + std::to_string(nodeID) + ":" + node.toString() + "\n";
+            result += "R" + std::to_string(nodeID) + ":";
+            result += pair.second.toString() + "\n";
         }
         return result;
     }

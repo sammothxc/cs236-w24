@@ -1,11 +1,12 @@
+// Node.h
 #ifndef NODE_H
 #define NODE_H
 
 #include <set>
-#include <string>
-#include <algorithm>
+#include <iostream>
 
 class Node {
+
 private:
     std::set<int> adjacentNodeIDs;
 

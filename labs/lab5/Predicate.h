@@ -5,15 +5,19 @@
 #include <string>
 
 class Predicate {
-  private:
+private:
     std::string name;
 
-  public:
-    Predicate(const std::string &n) : name(n) {}
+public:
+    Predicate(const std::string& n) : name(n) {}
 
-    std::string getName() const { return name; }
+    std::string getName() const {
+        return name;
+    }
 
-    std::string toString() const { return name + "()"; }
+    std::string toString() const {
+        return name + "()";
+    }
 };
 
 #endif // PREDICATE_H
